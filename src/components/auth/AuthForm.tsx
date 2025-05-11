@@ -2,8 +2,7 @@
 
 // SOLVE ISSUE WITH TAILWIND
 
-import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -12,37 +11,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import { Separator } from "@/components/ui/separator";
 import { Github, Mail } from "lucide-react";
+import SignUp from "../auth/SignUp";
+import SignIn from "./SignIn";
 
 export default function AuthForm() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const [email, setEmail] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    console.log(email);
-  };
-
-  const handleSignUp = () => {
-    console.log("signed up");
-  };
-
-  async function onSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-50 to-indigo-50 p-4">
       <Card className="w-full max-w-md shadow-lg">
@@ -55,7 +32,7 @@ export default function AuthForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="signin" className="w-full">
+          <Tabs defaultValue="signup" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger
                 className="data-[state=active]:bg-gray-300 data-[state=active]:text-gray-800"
@@ -71,81 +48,8 @@ export default function AuthForm() {
               </TabsTrigger>
             </TabsList>
 
-            {/* SIGN IN */}
-
-            <TabsContent value="signin">
-              <form onSubmit={onSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    placeholder="name@example.com"
-                    type="email"
-                    value={email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Password</Label>
-                    <Button
-                      variant="link"
-                      className="px-0 font-normal h-auto text-xs"
-                    >
-                      Forgot password?
-                    </Button>
-                  </div>
-                  <Input id="password" type="password" required />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="remember" />
-                  <Label htmlFor="remember" className="text-sm font-normal">
-                    Remember me
-                  </Label>
-                </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Signing in..." : "Sign In"}
-                </Button>
-              </form>
-            </TabsContent>
-
-            {/* SIGN UP  */}
-
-            <TabsContent value="signup">
-              <form onSubmit={onSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">First name</Label>
-                    <Input id="firstName" placeholder="John" required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName">Last name</Label>
-                    <Input id="lastName" placeholder="Doe" required />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email-signup">Email</Label>
-                  <Input
-                    id="email-signup"
-                    placeholder="name@example.com"
-                    type="email"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password-signup">Password</Label>
-                  <Input id="password-signup" type="password" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirm-password">Confirm Password</Label>
-                  <Input id="confirm-password" type="password" required />
-                </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Creating account..." : "Create Account"}
-                </Button>
-              </form>
-            </TabsContent>
+            <SignIn />
+            <SignUp />
           </Tabs>
 
           {/* SEPARATOR  */}
