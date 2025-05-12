@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { TabsContent } from "@/components/ui/tabs";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { authUser } from "@/requests/UserRequest";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -19,12 +19,20 @@ export default function SignIn() {
     }));
   };
 
-  async function onSubmit(event: React.FormEvent) {
-    event.preventDefault();
+  const navigate = useNavigate();
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
     setIsLoading(true);
-    const response = await authUser("auth/login", formData);
-    console.log(response.message);
-    setIsLoading(false);
+    try {
+      const response = await authUser("auth/login", formData);
+      console.log(response.message);
+      navigate("/profile");
+    } catch (err) {
+      console.error("Ligon is failed"), err.message;
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
