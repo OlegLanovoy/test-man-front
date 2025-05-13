@@ -24,11 +24,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  profileFormSchema,
-  ProfileFormValues,
-} from "@/validation-schemas/profile-schema";
+
+import { ProfileFormValues } from "@/validation-schemas/profile-schema";
 import { useEffect, useState } from "react";
 
 interface UserData {
@@ -179,7 +176,7 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
                       name="urls.twitter"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Twitter</FormLabel>
+                          <FormLabel>Instagram</FormLabel>
                           <FormControl>
                             <div className="flex items-center">
                               <span className="mr-2 text-muted-foreground">
@@ -204,9 +201,6 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
                         <FormLabel>LinkedIn</FormLabel>
                         <FormControl>
                           <div className="flex items-center">
-                            <span className="mr-2 text-muted-foreground">
-                              linkedin.com/in/
-                            </span>
                             <Input placeholder="linkedin username" {...field} />
                           </div>
                         </FormControl>

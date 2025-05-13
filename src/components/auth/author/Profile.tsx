@@ -47,7 +47,8 @@ export default function Profile() {
       >
         <ProfileTabsTriggers />
         <ProfilePage userData={userData} />
-        <AccountPage />
+        {userData && <AccountPage userData={userData} />}
+
         <SecurityPage />
         <NotificationsPage />
       </Tabs>

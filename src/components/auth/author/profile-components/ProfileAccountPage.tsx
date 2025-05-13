@@ -23,7 +23,14 @@ import {
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export const AccountPage = () => {
+interface UserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  age: number;
+}
+
+export const AccountPage = ({ userData }: { userData: UserData }) => {
   return (
     <TabsContent value="account">
       <div className="space-y-6">
@@ -39,11 +46,19 @@ export const AccountPage = () => {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="first-name">First name</Label>
-                  <Input id="first-name" defaultValue="John" />
+                  <Input
+                    id="first-name"
+                    defaultValue={userData.firstName}
+                    placeholder="Name"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="last-name">Last name</Label>
-                  <Input id="last-name" defaultValue="Doe" />
+                  <Input
+                    id="last-name"
+                    defaultValue={userData.lastName}
+                    placeholder="Last Name"
+                  />
                 </div>
               </div>
 
