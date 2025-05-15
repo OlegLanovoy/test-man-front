@@ -27,7 +27,7 @@ export default function SignIn() {
     try {
       const response = await authUser("auth/login", formData);
       console.log(response.message);
-      navigate("/profile");
+      navigate("/");
     } catch (err) {
       console.error("Ligon is failed"), err.message;
     } finally {

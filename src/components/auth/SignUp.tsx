@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { authUser } from "@/requests/UserRequest";
 
+import { useNavigate } from "react-router-dom";
+
 interface FormState {
   firstName: string;
   lastName: string;
@@ -17,6 +19,8 @@ interface FormState {
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<FormState>({
     firstName: "",
@@ -39,8 +43,10 @@ export default function SignUp() {
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
     setIsLoading(true);
-
     const response = await authUser("auth/signup", formData);
+    if (response?.success) {
+      navigate("/");
+    }
     setIsLoading(false);
     console.log(response);
   }
