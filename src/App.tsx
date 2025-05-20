@@ -6,7 +6,8 @@ import "./App.css";
 import AuthForm from "./components/auth/AuthForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Reminder from "./components/reminder/Reminder";
-import MainPage from "./components/main/Main";
+import MainPage from "./components/main";
+import CreatePost from "./components/create-post/CreatePost";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/reminder" element={<Reminder />} />
         <Route path="/" element={<MainPage />} />
+        <Route path="/create-post" element={<CreatePost />} />
       </Routes>
     </Router>
   );

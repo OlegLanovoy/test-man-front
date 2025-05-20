@@ -172,6 +172,57 @@ const posts = [
     likes: 118,
     comments: 31,
   },
+  {
+    id: "11",
+    title: "BLIATTTTTTTTTTTTTTTTT",
+    excerpt:
+      "Explore upcoming CSS features and how they will change the way we style web applications in the near future.",
+    coverImage: "/placeholder.svg?height=600&width=800",
+    date: "2023-03-25T09:35:00Z",
+    author: {
+      name: "Rachel Brown",
+      avatar: "/placeholder.svg?height=100&width=100",
+    },
+    category: "CSS",
+    tags: ["Web Development", "Design", "Frontend"],
+    readTime: "6 min read",
+    likes: 118,
+    comments: 31,
+  },
+  {
+    id: "12",
+    title: "SHIIIIIIIIIIIIIITTTTTTTTTTTTTT",
+    excerpt:
+      "Explore upcoming CSS features and how they will change the way we style web applications in the near future.",
+    coverImage: "/placeholder.svg?height=600&width=800",
+    date: "2023-03-25T09:35:00Z",
+    author: {
+      name: "Rachel Brown",
+      avatar: "/placeholder.svg?height=100&width=100",
+    },
+    category: "CSS",
+    tags: ["Web Development", "Design", "Frontend"],
+    readTime: "6 min read",
+    likes: 118,
+    comments: 31,
+  },
+  {
+    id: "13",
+    title: "FUCKKKKKKKKKKKKKKKKKKKKKKKKK",
+    excerpt:
+      "Explore upcoming CSS features and how they will change the way we style web applications in the near future.",
+    coverImage: "/placeholder.svg?height=600&width=800",
+    date: "2023-03-25T09:35:00Z",
+    author: {
+      name: "Rachel Brown",
+      avatar: "/placeholder.svg?height=100&width=100",
+    },
+    category: "CSS",
+    tags: ["Web Development", "Design", "Frontend"],
+    readTime: "6 min read",
+    likes: 118,
+    comments: 31,
+  },
 ];
 
 export default function MainPage() {
