@@ -8,7 +8,11 @@ interface UserData {
   firstName: string;
   lastName: string;
   email: string;
-  age: number;
+  bio: string;
+  age?: number;
+  webSite: string;
+  instagram: string;
+  linkedIn: string;
 }
 
 export const ProfileHeader = ({ userData }: { userData: UserData | null }) => {

@@ -42,7 +42,7 @@ export default function CreatePost() {
     try {
       const values = form.getValues(); // ← получаем значения формы
 
-      const response = await postCreate("posts", {
+      const response = await postCreate("post-create", {
         title: values.title,
         text: values.text,
         category: values.category, // если это число

@@ -14,12 +14,18 @@ import { ProfileTabsTriggers } from "./profile-components/ProfileTabsTriggers";
 
 // IMPORTS DF REQUESTS
 import { getMe } from "@/requests/UserRequest";
+import { profileRequest } from "@/requests/Profilerequest";
 
 interface UserData {
   firstName: string;
   lastName: string;
   email: string;
-  age: number;
+  bio: string;
+  age?: number;
+  userName: string;
+  webSite: string;
+  instagram: string;
+  linkedIn: string;
 }
 
 export default function Profile() {
@@ -40,7 +46,7 @@ export default function Profile() {
       <ProfileHeader userData={userData} />
 
       <Tabs
-        defaultValue="profile"
+        defaultValue="account"
         value={activeTab}
         onValueChange={setActiveTab}
         className="space-y-6"

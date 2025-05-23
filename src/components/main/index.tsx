@@ -240,7 +240,7 @@ export default function MainPage() {
         </p>
       </div>
 
-      <PostsWrapper initialPosts={posts} />
+      <PostsWrapper />
     </main>
   );
 }

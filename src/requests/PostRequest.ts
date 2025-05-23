@@ -19,7 +19,7 @@ export const postCreate = async (url: string, postData: any) => {
 
 export const getAllPosts = async (url: string) => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(`${BASE_URL}${url}`);
     return response;
   } catch (err) {
     if (err instanceof Error) {

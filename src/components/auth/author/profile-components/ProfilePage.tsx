@@ -27,12 +27,16 @@ import { useForm } from "react-hook-form";
 
 import { ProfileFormValues } from "@/validation-schemas/profile-schema";
 import { useEffect, useState } from "react";
+import { profileRequest } from "@/requests/Profilerequest";
 
 interface UserData {
   firstName: string;
   lastName: string;
   email: string;
-  age: number;
+  bio: string;
+  webSite: string;
+  instagram: string;
+  linkedIn: string;
 }
 
 export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
@@ -48,11 +52,16 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
   //   },
   // });
 
+  // console.log(userData.bio);
+
   const form = useForm({
     defaultValues: {
       fullName: "",
       email: "",
-      age: 0,
+      bio: "",
+      webSite: "",
+      instagram: "",
+      linkedIn: "",
     },
   });
 
@@ -61,21 +70,26 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
       form.reset({
         fullName: `${userData.firstName} ${userData.lastName}`,
         email: userData.email,
-        age: userData.age,
+        bio: userData.bio,
+        webSite: userData.webSite,
+        instagram: userData.instagram,
+        linkedIn: userData.linkedIn,
       });
     }
   }, [userData]);
 
   // SOME FAKE ONSUBMIT
 
-  function onSubmit(data: ProfileFormValues) {
+  async function onSubmit(data: ProfileFormValues) {
     setIsLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      console.log(data);
+    try {
+      const response = await profileRequest("me/profile", data);
+      console.log("Profile updated", response.data);
+    } catch (err) {
+      console.error("Update error", err);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   }
 
   return (
@@ -154,7 +168,7 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <FormField
                       control={form.control}
-                      name="urls.website"
+                      name="webSite"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Website</FormLabel>
@@ -173,7 +187,7 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
                     />
                     <FormField
                       control={form.control}
-                      name="urls.twitter"
+                      name="instagram"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Instagram</FormLabel>
@@ -195,7 +209,7 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
                   </div>
                   <FormField
                     control={form.control}
-                    name="urls.linkedin"
+                    name="linkedIn"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>LinkedIn</FormLabel>

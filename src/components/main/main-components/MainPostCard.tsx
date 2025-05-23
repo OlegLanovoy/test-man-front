@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { BookmarkIcon, Heart, MessageCircle, Share2 } from "lucide-react";
@@ -21,17 +21,13 @@ export interface Post {
   id: string;
   title: string;
   excerpt: string;
-  coverImage: string;
-  date: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
   category: string;
   tags: string[];
   readTime: string;
-  likes: number;
-  comments: number;
+  createdAt: string;
+  likes?: number;
+  comments?: number;
+  user: { firstName: string; lastName: string; age: number };
 }
 
 interface PostCardProps {
@@ -48,7 +44,14 @@ export function PostCard({
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
 
-  const timeAgo = formatDistanceToNow(new Date(post.date), { addSuffix: true });
+  const timeAgo = useMemo(() => {
+    if (!post.createdAt || isNaN(Date.parse(post.createdAt))) {
+      console.warn("Invalid createdAt format:", post.createdAt);
+      return "Unknown time";
+    }
+
+    return formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
+  }, [post.createdAt]);
 
   return (
     <Card
@@ -65,10 +68,11 @@ export function PostCard({
         )}
       >
         <img
-          src={post.coverImage || "/placeholder.svg"}
+          src={"/placeholder.svg"}
           alt={post.title}
           className="object-cover transition-transform duration-500 hover:scale-105"
         />
+
         <Badge className="absolute left-3 top-3 z-10">{post.category}</Badge>
       </div>
       <div
@@ -99,17 +103,10 @@ export function PostCard({
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-between border-t p-4">
-          <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={post.author.avatar || "/placeholder.svg"}
-                alt={post.author.name}
-              />
-              <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <span className="text-sm font-medium">{post.author.name}</span>
-          </div>
           <div className="flex items-center gap-1">
+            <span className="text-sm font-medium">
+              {post.user.firstName} {post.user.lastName}
+            </span>
             <Button
               variant="ghost"
               size="icon"

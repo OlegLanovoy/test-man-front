@@ -5,35 +5,36 @@ import { MainSelect } from "./main-components/MainSelect";
 import { MainPaggination } from "./main-components/MainPagination";
 import { MainCategories } from "./main-components/MainCategories";
 import { MainPosts } from "./main-components/MainPosts";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { getAllPosts } from "@/requests/PostRequest";
 
 interface PostsWrapperProps {
-  initialPosts: Post[];
   className?: string;
 }
 
 type SortOption = "latest" | "oldest" | "popular" | "comments";
 
-export function PostsWrapper({ initialPosts, className }: PostsWrapperProps) {
+export function PostsWrapper({ className }: PostsWrapperProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("latest");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
 
   const postsPerPage = 6;
 
   const categories = useMemo(
-    () => Array.from(new Set(initialPosts.map((post) => post.category))),
-    [initialPosts]
+    () => Array.from(new Set(allPosts.map((post) => post.category))),
+    [allPosts]
   );
 
   const tags = useMemo(
-    () => Array.from(new Set(initialPosts.flatMap((post) => post.tags))),
-    [initialPosts]
+    () => Array.from(new Set(allPosts.flatMap((post) => post.tags))),
+    [allPosts]
   );
 
   const toggleCategory = (category: string) => {
@@ -59,7 +60,7 @@ export function PostsWrapper({ initialPosts, className }: PostsWrapperProps) {
   };
 
   const filteredPosts = useMemo(() => {
-    let result = [...initialPosts];
+    let result = [...allPosts];
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -102,7 +103,7 @@ export function PostsWrapper({ initialPosts, className }: PostsWrapperProps) {
     }
 
     return result;
-  }, [initialPosts, searchQuery, selectedCategories, selectedTags, sortBy]);
+  }, [allPosts, searchQuery, selectedCategories, selectedTags, sortBy]);
 
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const currentPosts = filteredPosts.slice(
@@ -113,9 +114,23 @@ export function PostsWrapper({ initialPosts, className }: PostsWrapperProps) {
   const navigate = useNavigate();
 
   const logOut = () => {
-    console.log(Cookies.remove("token"));
+    Cookies.remove("token");
     navigate("/auth");
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllPosts("posts");
+        const data = response.data;
+        setAllPosts(data);
+        console.log("Fetched posts:", data);
+      } catch (err) {
+        console.error("Failed to fetch posts", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className={cn("space-y-8", className)}>
@@ -129,6 +144,7 @@ export function PostsWrapper({ initialPosts, className }: PostsWrapperProps) {
       >
         Profile
       </Button>
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <MainSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
