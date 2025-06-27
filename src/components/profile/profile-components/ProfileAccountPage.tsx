@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CreditCard } from "lucide-react";
 
@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -30,6 +31,8 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { AccountFormValues } from "@/validation-schemas/profile-schema";
+import { profileRequest } from "@/requests/Profilerequest";
 
 interface UserData {
   firstName: string;
@@ -44,6 +47,8 @@ interface UserData {
 }
 
 export const AccountPage = ({ userData }: { userData: UserData }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const form = useForm({
     defaultValues: {
       firstName: "",
@@ -64,10 +69,22 @@ export const AccountPage = ({ userData }: { userData: UserData }) => {
     }
   }, [userData]);
 
+  async function onSubmit(data: AccountFormValues) {
+    setIsLoading(true);
+    try {
+      const response = await profileRequest("me/profile", data);
+      console.log("Profile updated", response.data);
+    } catch (err) {
+      console.error("Update error", err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <TabsContent value="account">
       <Form {...form}>
-        <form className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Account Information</CardTitle>
@@ -151,6 +168,15 @@ export const AccountPage = ({ userData }: { userData: UserData }) => {
                   )}
                 />
               </div>
+
+              <CardFooter className="flex justify-end gap-2">
+                <Button variant="outline" type="button">
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? "Saving..." : "Save changes"}
+                </Button>
+              </CardFooter>
 
               <Separator />
 

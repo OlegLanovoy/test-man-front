@@ -1,18 +1,14 @@
-// IMPORT OF REACT
 import { useEffect, useState } from "react";
 
-// IMPORTS OF PAGES
 import { ProfilePage } from "./profile-components/ProfilePage";
 import { SecurityPage } from "./profile-components/ProfileSecurityPage";
 import { NotificationsPage } from "./profile-components/ProfileNotificationsPage";
 import { AccountPage } from "./profile-components/ProfileAccountPage";
 
-// IMPORTS OF UI
 import { Tabs } from "@/components/ui/tabs";
 import { ProfileHeader } from "./profile-components/ProfileHeader";
 import { ProfileTabsTriggers } from "./profile-components/ProfileTabsTriggers";
 
-// IMPORTS DF REQUESTS
 import { getMe } from "@/requests/UserRequest";
 import { profileRequest } from "@/requests/Profilerequest";
 

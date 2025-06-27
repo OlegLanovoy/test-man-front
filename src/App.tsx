@@ -1,6 +1,6 @@
 // import React from "react";
 
-import Profile from "./components/auth/author/Profile";
+import Profile from "./components/profile/Profile";
 
 import "./App.css";
 import AuthForm from "./components/auth/AuthForm";

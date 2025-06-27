@@ -20,7 +20,7 @@ export const authUser = async (url: string, postData: any) => {
 
 export const getMe = async (url: string) => {
   try {
-    const response = await axios.get(`http://localhost:5000/${url}`, {
+    const response = await axios.get(`${BASE_URL}user/${url}`, {
       withCredentials: true,
     });
     return response.data;
@@ -32,3 +32,30 @@ export const getMe = async (url: string) => {
     }
   }
 };
+
+const instance = axios.create({
+  baseURL: "http://localhost:5000",
+  withCredentials: true,
+});
+
+instance.interceptors.response.use(
+  (res) => res,
+  async (err) => {
+    const originalRequest = err.config;
+
+    if (err.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await instance.post("/auth/refresh");
+        return instance(originalRequest); // повтор запроса
+      } catch {
+        // если refresh тоже не сработал
+        console.error("Unauthorized — need to login again");
+      }
+    }
+
+    return Promise.reject(err);
+  }
+);
+
+export default instance;

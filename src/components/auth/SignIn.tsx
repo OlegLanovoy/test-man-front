@@ -29,7 +29,7 @@ export default function SignIn() {
       console.log(response.message);
       navigate("/");
     } catch (err) {
-      console.error("Ligon is failed"), err.message;
+      console.error("Login is failed", err);
     } finally {
       setIsLoading(false);
     }
@@ -40,7 +40,7 @@ export default function SignIn() {
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input
+          <Input 
             name="email"
             id="email"
             placeholder="name@example.com"

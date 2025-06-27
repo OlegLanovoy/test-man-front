@@ -17,6 +17,8 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
+import { likePost, unlikePost } from "@/requests/LikesRequest";
+
 export interface Post {
   id: string;
   title: string;
@@ -111,7 +113,18 @@ export function PostCard({
               variant="ghost"
               size="icon"
               className={cn("h-8 w-8", liked && "text-red-500")}
-              onClick={() => setLiked(!liked)}
+              onClick={async () => {
+                try {
+                  if (liked) {
+                    await unlikePost(Number(post.id));
+                  } else {
+                    await likePost(Number(post.id));
+                  }
+                  setLiked(!liked);
+                } catch (error) {
+                  console.error("Error updating like:", error);
+                }
+              }}
             >
               <Heart
                 className="h-4 w-4"

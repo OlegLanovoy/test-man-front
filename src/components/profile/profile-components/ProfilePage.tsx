@@ -222,21 +222,17 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
                       </FormItem>
                     )}
                   />
+                  <CardFooter className="flex p-0 justify-end gap-2">
+                    <Button variant="outline" type="button">
+                      Cancel
+                    </Button>
+                    <Button type="submit" disabled={isLoading}>
+                      {isLoading ? "Saving..." : "Save changes"}
+                    </Button>
+                  </CardFooter>
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="flex justify-end gap-2">
-              <Button
-                variant="outline"
-                type="button"
-                // onClick={() => form.reset(defaultValues)}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Saving..." : "Save changes"}
-              </Button>
-            </CardFooter>
           </Card>
         </form>
       </Form>

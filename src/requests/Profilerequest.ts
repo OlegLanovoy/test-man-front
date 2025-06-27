@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/";
+import { PasswordFormValues } from "@/validation-schemas/profile-schema";
+const BASE_URL = "http://localhost:5000/user/";
 
 export const profileRequest = async (url: string, postData: any) => {
   try {
@@ -15,4 +16,19 @@ export const profileRequest = async (url: string, postData: any) => {
       throw new Error(`Unknown Error`);
     }
   }
+};
+
+export const changePasswordRequest = async (
+  url: string,
+  data: PasswordFormValues
+) => {
+  const response = await axios.patch(
+    `${BASE_URL}${url}`, // укажи свой URL
+    {
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    },
+    { withCredentials: true }
+  );
+  return response.data;
 };

@@ -114,7 +114,7 @@ export function PostsWrapper({ className }: PostsWrapperProps) {
   const navigate = useNavigate();
 
   const logOut = () => {
-    Cookies.remove("token");
+    Cookies.remove("accessToken");
     navigate("/auth");
   };
 
