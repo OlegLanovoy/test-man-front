@@ -6,8 +6,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useState } from "react";
-
 type SortOption = "latest" | "oldest" | "popular" | "comments";
 
 interface MainSelectProps {

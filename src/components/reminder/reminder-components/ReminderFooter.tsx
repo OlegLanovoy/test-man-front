@@ -1,4 +1,3 @@
-// ReminderFooter.tsx
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight } from "lucide-react";

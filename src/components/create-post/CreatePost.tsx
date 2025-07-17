@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { v4 as uuidv4 } from "uuid";
-import { format } from "date-fns";
+
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { postSchema } from "@/validation-schemas/post-schemas";
@@ -13,6 +12,7 @@ import { FormFieldCategory } from "./create-post-components/inputs/FormFieldCate
 import { FormFieldTags } from "./create-post-components/inputs/FormFieldTags";
 import { PostPreview } from "./create-post-components/Preview";
 import { postCreate } from "@/requests/PostRequest";
+import { useNavigate } from "react-router-dom";
 
 export interface Post {
   id: string;
@@ -25,6 +25,8 @@ export interface Post {
 export default function CreatePost() {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
@@ -42,18 +44,19 @@ export default function CreatePost() {
     try {
       const values = form.getValues(); // ← получаем значения формы
 
-      const response = await postCreate("post-create", {
+      const response = await postCreate("create", {
         title: values.title,
         text: values.text,
         category: values.category, // если это число
         tags: values.tags,
       });
+      navigate("/");
 
       const data = response.data;
       console.log(data);
       return data;
     } catch (err) {
-      console.error(err.message);
+      console.error(err instanceof Error ? err.message : "Unknown Error");
     }
   };
 
@@ -75,7 +78,7 @@ export default function CreatePost() {
     form.setValue("tags", newTags);
   };
 
-  const onSubmit = async (values: z.infer<typeof postSchema>) => {};
+  const onSubmit = async () => {};
 
   return (
     <div className="max-w-3xl mx-auto p-6">

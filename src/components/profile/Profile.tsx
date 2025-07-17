@@ -10,7 +10,6 @@ import { ProfileHeader } from "./profile-components/ProfileHeader";
 import { ProfileTabsTriggers } from "./profile-components/ProfileTabsTriggers";
 
 import { getMe } from "@/requests/UserRequest";
-import { profileRequest } from "@/requests/Profilerequest";
 
 interface UserData {
   firstName: string;

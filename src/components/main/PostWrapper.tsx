@@ -95,10 +95,10 @@ export function PostsWrapper({ className }: PostsWrapperProps) {
         );
         break;
       case "popular":
-        result.sort((a, b) => b.likes - a.likes);
+        result.sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
         break;
       case "comments":
-        result.sort((a, b) => b.comments - a.comments);
+        result.sort((a, b) => (b.comments ?? 0) - (a.comments ?? 0));
         break;
     }
 

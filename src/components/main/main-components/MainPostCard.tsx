@@ -6,7 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { BookmarkIcon, Heart, MessageCircle, Share2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +24,7 @@ export interface Post {
   title: string;
   excerpt: string;
   category: string;
+  date: number;
   tags: string[];
   readTime: string;
   createdAt: string;
@@ -133,7 +134,7 @@ export function PostCard({
               <span className="sr-only">Like</span>
             </Button>
             <span className="text-xs text-muted-foreground">
-              {liked ? post.likes + 1 : post.likes}
+              {liked ? (post.likes ?? 0) + 1 : post.likes}
             </span>
 
             <Button variant="ghost" size="icon" className="h-8 w-8 ml-2">

@@ -26,7 +26,7 @@ import {
 import { useForm } from "react-hook-form";
 
 import { ProfileFormValues } from "@/validation-schemas/profile-schema";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { profileRequest } from "@/requests/Profilerequest";
 
 interface UserData {
@@ -42,21 +42,9 @@ interface UserData {
 export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // CHECK OUT THIS CASE
-
-  // const form = useForm({
-  //   defaultValues: {
-  //     fullName: `${userData?.firstName ?? ""} ${userData?.lastName ?? ""}`,
-  //     email: userData?.email ?? "",
-  //     age: userData?.age ?? 0,
-  //   },
-  // });
-
-  // console.log(userData.bio);
-
-  const form = useForm({
+  const form = useForm<ProfileFormValues>({
     defaultValues: {
-      fullName: "",
+      fullName: `${userData?.firstName} ${userData?.lastName}` || "",
       email: "",
       bio: "",
       webSite: "",
@@ -65,25 +53,18 @@ export const ProfilePage = ({ userData }: { userData: UserData | null }) => {
     },
   });
 
-  useEffect(() => {
-    if (userData) {
-      form.reset({
-        fullName: `${userData.firstName} ${userData.lastName}`,
-        email: userData.email,
-        bio: userData.bio,
-        webSite: userData.webSite,
-        instagram: userData.instagram,
-        linkedIn: userData.linkedIn,
-      });
-    }
-  }, [userData]);
-
-  // SOME FAKE ONSUBMIT
-
   async function onSubmit(data: ProfileFormValues) {
     setIsLoading(true);
+    const { fullName, ...rest } = data;
+    const [firstName = "", lastName = ""] = fullName.trim().split(" ");
+    const profileData = {
+      ...rest,
+      firstName,
+      lastName,
+    };
+
     try {
-      const response = await profileRequest("me/profile", data);
+      const response = await profileRequest("me/profile", profileData);
       console.log("Profile updated", response.data);
     } catch (err) {
       console.error("Update error", err);

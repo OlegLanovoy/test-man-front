@@ -43,12 +43,12 @@ export default function SignUp() {
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
     setIsLoading(true);
-    const response = await authUser("auth/signup", formData);
+    const response = await authUser("signup", formData);
+    console.log(response);
     if (response?.success) {
       navigate("/");
     }
     setIsLoading(false);
-    console.log(response);
   }
 
   return (

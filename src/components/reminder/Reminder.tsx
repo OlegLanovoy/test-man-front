@@ -1,5 +1,4 @@
 import { ProfileCompletionModal } from "./ProfileCompletionModal";
-import { ReminderHeader } from "./reminder-components/ReminderHeader";
 
 export default function Reminder() {
   return (

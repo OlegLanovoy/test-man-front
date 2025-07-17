@@ -1,6 +1,5 @@
-// create-post-components/PostPreview.tsx
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { Clock, Hash } from "lucide-react";
 import { format } from "date-fns";
 import { z } from "zod";

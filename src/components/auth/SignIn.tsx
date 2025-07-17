@@ -25,9 +25,11 @@ export default function SignIn() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await authUser("auth/login", formData);
+      const response = await authUser("login", formData);
       console.log(response.message);
-      navigate("/");
+      if (response.success) {
+        navigate("/");
+      }
     } catch (err) {
       console.error("Login is failed", err);
     } finally {
@@ -40,7 +42,7 @@ export default function SignIn() {
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input 
+          <Input
             name="email"
             id="email"
             placeholder="name@example.com"

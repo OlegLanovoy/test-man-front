@@ -1,12 +1,10 @@
-import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/";
+
+import {instance} from "./UserRequest"
 
 export const postCreate = async (url: string, postData: any) => {
   try {
-    const response = await axios.post(`${BASE_URL}${url}`, postData, {
-      withCredentials: true,
-    });
+    const response = await instance.post(`posts/${url}`, postData);
     return response;
   } catch (err) {
     if (err instanceof Error) {
@@ -19,7 +17,7 @@ export const postCreate = async (url: string, postData: any) => {
 
 export const getAllPosts = async (url: string) => {
   try {
-    const response = await axios.get(`${BASE_URL}${url}`);
+    const response = await instance.get(url);
     return response;
   } catch (err) {
     if (err instanceof Error) {

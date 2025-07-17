@@ -1,8 +1,6 @@
 import { Camera } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { getMe } from "@/requests/UserRequest";
 
 interface UserData {
   firstName: string;

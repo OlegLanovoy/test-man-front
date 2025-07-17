@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import {
-  FormControl,
   FormDescription,
   FormField,
   FormItem,
@@ -8,13 +7,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { postSchema } from "@/validation-schemas/post-schemas";
 import { Hash, Plus, X } from "lucide-react";

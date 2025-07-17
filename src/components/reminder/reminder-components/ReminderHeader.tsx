@@ -2,7 +2,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogContent,
 } from "@/components/ui/dialog";
 
 import { CheckCircle2 } from "lucide-react";
@@ -21,7 +20,6 @@ export const ReminderHeader = ({ progress }: { progress: number }) => {
         </DialogDescription>
       </DialogHeader>
 
-      {/* Progress indicator */}
       <div className="flex justify-between mb-4 px-2">
         <div className="flex items-center gap-2 w-full">
           {steps.map((step, index) => (
