@@ -28,6 +28,7 @@ export default function SignIn() {
       const response = await authUser("login", formData);
       console.log(response.message);
       if (response.success) {
+        localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/");
       }
     } catch (err) {

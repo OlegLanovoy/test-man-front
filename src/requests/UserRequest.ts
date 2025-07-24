@@ -3,14 +3,29 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const instance = axios.create({
-  baseURL: apiUrl,
+  baseURL: apiUrl + "/",
   withCredentials: true,
 });
 
+interface IResponse<T> {
+  data: T;
+  success: boolean;
+  message: string;
+}
+
+interface IUserData {
+  firstName: string;
+  lastName: string;
+  age: number;
+  email: string;
+}
 
 export const authUser = async (url: string, postData: any) => {
   try {
-    const response = await instance.post(`auth/${url}`, postData);
+    const response = await instance.post<IResponse<IUserData>>(
+      `auth/${url}`,
+      postData
+    );
 
     return response.data;
   } catch (err) {
@@ -33,7 +48,7 @@ export const removeToken = async () => {
       throw new Error("Unknown error");
     }
   }
-}
+};
 
 export const getMe = async (url: string) => {
   try {
@@ -47,8 +62,6 @@ export const getMe = async (url: string) => {
     }
   }
 };
-
-
 
 // instance.interceptors.response.use(
 //   (res) => res,

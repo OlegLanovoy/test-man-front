@@ -1,6 +1,5 @@
 import Profile from "./components/profile/Profile";
 
-import "./App.css";
 import AuthForm from "./components/auth/AuthForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Reminder from "./components/reminder/Reminder";

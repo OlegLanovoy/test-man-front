@@ -24,6 +24,7 @@ export function PostsWrapper({ className }: PostsWrapperProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const isAuthenticated = Boolean(localStorage.getItem("user"));
 
   const postsPerPage = 6;
 
@@ -134,16 +135,28 @@ export function PostsWrapper({ className }: PostsWrapperProps) {
 
   return (
     <div className={cn("space-y-8", className)}>
-      <Button variant="outline" className="mt-4 mr-5" onClick={logOut}>
-        Log Out
-      </Button>
-      <Button
-        variant="outline"
-        className="mt-4"
-        onClick={() => navigate("/profile")}
-      >
-        Profile
-      </Button>
+      {isAuthenticated ? (
+        <>
+          <Button variant="outline" className="mt-4 mr-5" onClick={logOut}>
+            Log Out
+          </Button>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => navigate("/profile")}
+          >
+            Profile
+          </Button>
+        </>
+      ) : (
+        <Button
+          variant="outline"
+          className="mt-4"
+          onClick={() => navigate("/auth")}
+        >
+          Sign Up
+        </Button>
+      )}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <MainSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
