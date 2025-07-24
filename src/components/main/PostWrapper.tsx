@@ -8,8 +8,8 @@ import { MainPosts } from "./main-components/MainPosts";
 import { useMemo, useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { getAllPosts } from "@/requests/PostRequest";
+import { removeToken } from "@/requests/UserRequest";
 
 interface PostsWrapperProps {
   className?: string;
@@ -114,9 +114,16 @@ export function PostsWrapper({ className }: PostsWrapperProps) {
 
   const navigate = useNavigate();
 
-  const logOut = () => {
-    Cookies.remove("accessToken");
-    navigate("/auth");
+  const logOut = async () => {
+    try {
+      const res = await removeToken();
+      if (res.status === 200) {
+        localStorage.removeItem("user");
+        navigate("/auth");
+      }
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   useEffect(() => {
