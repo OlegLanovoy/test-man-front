@@ -54,7 +54,7 @@ export const removeToken = async () => {
 
 export const getMe = async (url: string) => {
   try {
-    const response = await instance.get(`user/${url}`);
+    const response = await instance.get(`users/${url}`);
     return response.data;
   } catch (err) {
     if (err instanceof Error) {
