@@ -1,12 +1,10 @@
-import { instance } from './UserRequest';
-
+import { instance } from "./UserRequest";
 
 import { PasswordFormValues } from "@/validation-schemas/profile-schema";
 
-
 export const profileRequest = async (url: string, postData: any) => {
   try {
-    const response = await instance.patch(`user/${url}`, postData);
+    const response = await instance.patch(`users/${url}`, postData);
     return response;
   } catch (err) {
     if (err instanceof Error) {
@@ -22,7 +20,7 @@ export const changePasswordRequest = async (
   data: PasswordFormValues
 ) => {
   const response = await instance.patch(
-    `user/${url}`, // укажи свой URL
+    `users/${url}`, // укажи свой URL
     {
       currentPassword: data.currentPassword,
       newPassword: data.newPassword,
